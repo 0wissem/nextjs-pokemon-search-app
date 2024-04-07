@@ -10,7 +10,8 @@ interface Props {
 
 const DetailsCard = styled('div', {
   height: '600px',
-  maxWidth: '400px',
+  width: '400px',
+  minWidth: '350px',
   margin: '0 auto',
   background: '$mango',
   borderRadius: '$1 $1 $1 $1',
