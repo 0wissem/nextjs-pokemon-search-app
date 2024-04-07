@@ -8,6 +8,8 @@ import { IMG_ALT_KEY, IMG_URL_KEY, LINK_PATH_KEY } from '@/utils/mapPokemonPagin
 import ItemList from '@/components/UI/organisms/ItemList';
 import { GridContainer } from '@/components/UI/organisms/ItemList/ItemList';
 import Card from '@/components/UI/organisms/Card';
+import ItemHorizontalList from '@/components/UI/organisms/ItemHorizontalList';
+import Text from '@/components/UI/atoms/Text';
 
 
 interface Props {
@@ -27,18 +29,24 @@ console.log("chain:",chain)
         <PokemonCardDetails pokemon={pokemon} />
         <PokemonCardStats pokemon={pokemon} />
       </PokemonDetailContainer>
+      <Text
+            textStyle={'textParagraph'}
+            css={{
+              color: '$seafoamDark',
+              marginTop: 50,
+              marginBottom: 50,
 
-      <GridContainer>
-        
-      { (chain as GenericItem[]).map((item)=><Card
-            key={item?.name}
-            size={'large'}
-            title={item.name}
-            imgSrc={item[IMG_URL_KEY]}
-            imgAlt={item[IMG_ALT_KEY]}
-            linkPath={item[LINK_PATH_KEY]}
-          />)}
-      </GridContainer>
+            }}
+          >
+            <strong>Pokemon Evolution</strong>
+          </Text>
+      <ItemHorizontalList
+        list={chain}
+        titleKey="name"
+        imgSrcKey={IMG_URL_KEY}
+        imgAltKey={IMG_ALT_KEY}
+        linkPathKey={LINK_PATH_KEY}
+      />
 
     </DetailsTemplate>
   );

@@ -16,7 +16,7 @@ const StyledCard = styled('div', {
   flexDirection: 'column',
   alignItems: 'flex-start',
   padding: 0,
-  width: '$w100',
+  width: '$cardWidthBp1',
   height: '$cardHeight',
   '& div': {
     height: '$cardImgHeight',
@@ -27,7 +27,7 @@ const StyledCard = styled('div', {
 });
 
 const Card: FC<Props> = ({ imgSrc, imgAlt, title, linkPath }): JSX.Element => {
-  console.log("card:", imgSrc, imgAlt, title, linkPath)
+
   return (
     <StyledCard>
       <ResponsiveImage
