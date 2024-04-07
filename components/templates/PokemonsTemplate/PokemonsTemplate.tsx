@@ -11,6 +11,7 @@ import useFindPokemonSuggestions from '@/hooks/usePokemon';
 interface Props {
   children?: React.ReactNode;
   title: string;
+  
 }
 
 const StyledDiv = styled('div', {

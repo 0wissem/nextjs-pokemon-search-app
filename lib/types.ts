@@ -8,13 +8,27 @@ export interface Result {
   url: string;
 }
 
+export interface PokemonByCategoryResult {
+  pokemon: any;
+  name: string;
+  url: string;
+}
+
 export interface PokemonList {
+  pokemon: PokemonByCategoryResult[];
   count: number;
   next?: string;
   previous?: string;
   results: Result[] | GenericItem[];
 }
 
+
+export interface CategotyList {
+  count: number;
+  next?: string;
+  previous?: string;
+  results: Result[] | GenericItem[];
+}
 // Search Pokemon: https://pokeapi.co/api/v2/pokemon/{id-or-name}/
 
 export interface Ability2 {

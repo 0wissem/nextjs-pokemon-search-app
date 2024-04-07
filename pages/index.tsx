@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
-import { useFetchPokemonWithInfinityScroll } from '../hooks/usePokemon';
-import HomePage from '@/components/pages/HomePage';
+import { useFetchCategoriesWithInfinityScroll } from '../hooks/usePokemon';
 import MyBeatLoader from '@/components/UI/molecules/BeatLoader';
 import useFetchNextPage from '../hooks/useFetchNextPage';
 import Container from '@/components/UI/atoms/Container';
+import CategoryPage from '@/components/pages/CategoryPage';
 
 const IndexPage: FC = (): JSX.Element => {
   const { data, isSuccess, hasNextPage, fetchNextPage, isInitialLoading } =
-    useFetchPokemonWithInfinityScroll();
+    useFetchCategoriesWithInfinityScroll();
 
   useFetchNextPage(hasNextPage, fetchNextPage);
 
@@ -20,7 +20,7 @@ const IndexPage: FC = (): JSX.Element => {
   }
 
   if (isSuccess) {
-    return <HomePage pokemonList={data} />;
+    return <CategoryPage CategoryList={data} />;
   }
 
   return <></>;

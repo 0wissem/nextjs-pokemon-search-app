@@ -1,5 +1,7 @@
 import findPokemonSuggestions from '@/utils/findPokemonSuggestions';
 import mapListResults from '@/utils/mapPokemonPaginatedResults';
+import mapPokemonByCategoryPaginatedResults from '@/utils/mapPokemonByCategoryPaginatedResults';
+import mapListCategoriesResults from '@/utils/mapCategoriesPaginatedResults';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import api from '../pages/api/pokemon';
 import PokemonList, { PokemonData, Result } from '../lib/types';
@@ -14,15 +16,47 @@ const fetchPokemon = async (offset: number) => {
   return data;
 };
 
+const fetchPokemonByCategory = async (offset: number,category:string) => {
+  const { data } = await api.get<PokemonList>(
+    `/type/${category}?limit=${FETCH_LIMIT}&offset=${offset}`
+  );
+  data.results = mapPokemonByCategoryPaginatedResults(data?.pokemon);
+  return data;
+};
+
+const fetchCategories = async (offset: number) => {
+  const { data } = await api.get<PokemonList>(
+    `/type?limit=${FETCH_LIMIT}&offset=${offset}`
+  );
+  data.results = mapListCategoriesResults(data.results as Result[]);
+  return data;
+};
+export const useFetchCategoriesWithInfinityScroll = () => {
+  return useInfiniteQuery(
+    ['categoriesList'],
+    ({ pageParam = 0 }) => fetchCategories(pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.next) {
+          const url = new URL(lastPage.next!);
+          return url.searchParams.get('offset');
+        }
+        return undefined;
+      },
+    }
+  );
+};
+
+
 export const searchPokemon = async (query: string) => {
   const { data } = await api.get<PokemonData>(`/pokemon/${query}/`);
   return data;
 };
 
-export const useFetchPokemonWithInfinityScroll = () => {
+export const useFetchPokemonByCategoryWithInfinityScroll = (category:string) => {
   return useInfiniteQuery(
-    ['pokemonList'],
-    ({ pageParam = 0 }) => fetchPokemon(pageParam),
+    [`pokemonList/${category}`],
+    ({ pageParam = 0 }) => fetchPokemonByCategory(pageParam,category),
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.next) {
@@ -52,5 +86,6 @@ const useFindPokemonSuggestions = (slug: string) => {
     }
   );
 };
+
 
 export default useFindPokemonSuggestions;

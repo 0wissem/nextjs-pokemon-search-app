@@ -1,4 +1,4 @@
-import DefaultTemplate from '@/components/templates/DefaultTemplate';
+import DefaultTemplate from '@/components/templates/PokemonsTemplate';
 import ItemList from '@/components/UI/organisms/ItemList';
 import PokemonList from '@/lib/types';
 import {
@@ -13,7 +13,7 @@ interface Props {
   pokemonList: InfiniteData<PokemonList>;
 }
 
-const HomePage: FC<Props> = ({ pokemonList }): JSX.Element => {
+const PokemonsPage: FC<Props> = ({ pokemonList }): JSX.Element => {
   return (
     <DefaultTemplate title="NextJS Pokemon Search App">
       <ItemList
@@ -27,4 +27,4 @@ const HomePage: FC<Props> = ({ pokemonList }): JSX.Element => {
   );
 };
 
-export default HomePage;
+export default PokemonsPage;
