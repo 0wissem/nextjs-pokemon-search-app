@@ -12,7 +12,7 @@ interface Props {
   linkPathKey: keyof GenericItem;
 }
 
-const GridContainer = styled('div', {
+export const GridContainer = styled('div', {
   width: '$w100',
   display: 'grid',
   gridTemplateColumns: `repeat(auto-fit, minmax($cardWidthBp1, $cardWidthBp3))`,

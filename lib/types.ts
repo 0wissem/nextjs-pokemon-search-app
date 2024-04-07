@@ -389,4 +389,8 @@ export interface PokemonData {
   weight: number;
 }
 
+export interface PokemonSpeciesData {
+  evolution_chain: string;
+}
+
 export default PokemonList;

@@ -1,20 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
-import { searchPokemon, useSearchPokemon } from '@/hooks/usePokemon';
+import { getPokemonChain, searchPokemon, useGetPokemonChain, useSearchPokemon } from '@/hooks/usePokemon';
 import PokemonDetailsPage from '@/components/pages/PokemonDetails';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import MyBeatLoader from '@/components/UI/molecules/BeatLoader';
 import Title from '@/components/UI/atoms/Title';
 import Container from '@/components/UI/atoms/Container';
 import Link from 'next/link';
 import Text from '@/components/UI/atoms/Text';
+import { extractEvolutions } from '@/utils/extractionEvolutions';
+
+
+
 
 const PokemonDetails: FC = (): JSX.Element => {
   const router = useRouter();
   const pokemonName =
     typeof router.query?.name === 'string' ? router.query.name : '';
-
   const {
     isSuccess: pokemonIsSuccess,
     data: pokemonDetails,
@@ -25,7 +28,10 @@ const PokemonDetails: FC = (): JSX.Element => {
     isError: pokemonIsError,
   } = useSearchPokemon(pokemonName);
 
-  if (isInitialLoading || isLoading || isFetching || isRefetching) {
+  const { data:chain, isLoading:isLoadingChain, isError:chainIsError,isSuccess: chainIsSuccess, } = useGetPokemonChain(pokemonName);
+
+console.log(chain)
+  if (isInitialLoading || isLoading || isFetching || isRefetching || isLoadingChain ) {
     return (
       <Container page="spinner">
         <MyBeatLoader loading={pokemonIsSuccess} />
@@ -61,7 +67,7 @@ const PokemonDetails: FC = (): JSX.Element => {
   }
 
   if (pokemonIsSuccess) {
-    return <PokemonDetailsPage pokemon={pokemonDetails} />;
+    return <PokemonDetailsPage pokemon={pokemonDetails} chain={chain} />;
   }
 
   return <></>;
