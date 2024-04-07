@@ -30,7 +30,6 @@ const PokemonDetails: FC = (): JSX.Element => {
 
   const { data:chain, isLoading:isLoadingChain, isError:chainIsError,isSuccess: chainIsSuccess, } = useGetPokemonChain(pokemonName);
 
-console.log(chain)
   if (isInitialLoading || isLoading || isFetching || isRefetching || isLoadingChain ) {
     return (
       <Container page="spinner">

@@ -18,7 +18,7 @@ interface Props {
 }
 
 const PokemonDetailsPage: FC<Props> = ({ pokemon , chain}): JSX.Element => {
-console.log("chain:",chain)
+
   return (
     <DetailsTemplate
       backPath="/"
